@@ -1,3 +1,4 @@
+//reference: https://github.com/ucrparlay/PIP-algorithms/blob/main/sequence.h#L606
 #include <math.h>
 
 #include "parallel.h"
@@ -35,14 +36,14 @@ T scan(T *A, size_t n) {
 
 template <typename T>
 T scan_up(T *A, size_t s, size_t t) {
-  /*T temp = A[t];
+  T temp = A[t];
   if(t - s + 1 < 1e4){
     for(size_t i = s; i < t; ++i){
       temp += A[i];
     }
     A[t] = temp;
     return temp;
-  }*/
+  }
   if(s==t)return A[s];
   T v1, v2;
   auto f1 = [&]() { v1 = scan_up(A, s, (s+t)/2); };
@@ -54,16 +55,16 @@ T scan_up(T *A, size_t s, size_t t) {
 
 template <typename T>
 void scan_down(T *A, size_t s, size_t t, T offset) {
-  /*if(t - s + 1 < 1e4){
+  if(t - s + 1 < 1e4){
     T temp = 0;
     T p = offset;
-    for (size_t i = s; i < t; i++) {
+    for (size_t i = s; i <= t; i++) {
       p += temp;
       temp = A[i];
       A[i] = p;
     }
     return;
-  }*/
+  }
   if(s == t){
     A[s] = offset;
     return;

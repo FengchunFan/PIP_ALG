@@ -3,35 +3,36 @@
 
 #include "filter.h"
 #include "get_time.h"
-#include "filter_seq.h"
 
 using Type = long long;
 
 int main(int argc, char *argv[]) {
-  size_t n = 1e9;
+  size_t n = 1e4;
   //size_t n = 1e4;
-  int num_rounds = 3;
+  int num_rounds = 0;
+  long long pal_ans = 0;
+  long long seq_ans = 0;
   if (argc >= 2) {
     n = atoll(argv[1]);
   }
   if (argc >= 3) {
     num_rounds = atoi(argv[2]);
   }
-  Type *seq_scan_A = (Type *)malloc(n * sizeof(Type));
-  Type *pal_scan_A = (Type *)malloc(n * sizeof(Type));
+  Type *seq_filter_A = (Type *)malloc(n * sizeof(Type));
+  Type *pal_filter_A = (Type *)malloc(n * sizeof(Type));
   parallel_for(0, n, [&](size_t i) {
-    seq_scan_A[i] = i;
-    pal_scan_A[i] = i;
+    seq_filter_A[i] = i;
+    pal_filter_A[i] = i;
   });
 
   double total_time = 0;
   std::cout << "******* Parallel Results: ******* " << std::endl;
   for (int i = 0; i <= num_rounds; i++) {
     parlay::timer t;
-    long long exclusive_sum = scan(pal_scan_A, n);
+    pal_ans = pal_filter(pal_filter_A, n);
     t.stop();
     if (i == 0) {
-      std::cout << "Exclusive sum (Parallel): " << exclusive_sum << std::endl;
+      std::cout << "Exclusive sum (Parallel): " << pal_ans << std::endl;
       std::cout << "Warmup round running time: " << t.total_time() << std::endl;
     } else {
       std::cout << "Round " << i << " running time: " << t.total_time()
@@ -44,7 +45,7 @@ int main(int argc, char *argv[]) {
   double seq_total_time = 0;
   for (int i = 0; i <= num_rounds; i++) {
     parlay::timer seq_t;
-    long long seq_ans = seq_scan(seq_scan_A, n);
+    seq_ans = seq_filter(seq_filter_A, n);
     seq_t.stop();
 
     if (i == 0) {
@@ -65,26 +66,33 @@ int main(int argc, char *argv[]) {
             << std::endl;
   
   /*std::cout << "seq results: ";
-  for (size_t i = 0; i < n; i++) {
-    std::cout << seq_scan_A[i] << " ";
+  for (size_t i = 0; i < (size_t)seq_ans; i++) {
+    std::cout << seq_filter_A[i] << " ";
   }
   std::cout << std::endl;
   std::cout << "pal results: ";
-  for (size_t i = 0; i < n; i++) {
-    std::cout << pal_scan_A[i] << " ";
-  }
-  std::cout << std::endl;*/
-  for (size_t i = 0; i < n; i++) {
-    if (seq_scan_A[i] != pal_scan_A[i]) {
-      std::cout << "***********************" << std::endl;
-      std::cout << "**** Wrong answer! ****" << std::endl;
-      std::cout << "***** index: "<< i << " ****" << std::endl;
-      std::cout << "***********************" << std::endl;
-      break;
+  for (size_t i = 0; i < (size_t)pal_ans; i++) {
+    std::cout << pal_filter_A[i] << " ";
+  }*/
+  std::cout << std::endl;
+  std::cout << "seq ans: " << seq_ans << ". pal ans: " << pal_ans;
+  std::cout << std::endl;
+
+  if(seq_ans == pal_ans){
+    for (size_t i = 0; i < (size_t)seq_ans - 1; i++) {
+      if (seq_filter_A[i] != pal_filter_A[i]) {
+        std::cout << "***********************" << std::endl;
+        std::cout << "**** Wrong answer! ****" << std::endl;
+        std::cout << "***** index: "<< i << " ****" << std::endl;
+        std::cout << "***********************" << std::endl;
+        break;
+      }
     }
+  }else{
+    std::cout << "**** Wrong answer! ****" << std::endl;
   }
 
-  free(seq_scan_A);
-  free(pal_scan_A);
+  free(seq_filter_A);
+  free(pal_filter_A);
   return 0;
 }

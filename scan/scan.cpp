@@ -8,9 +8,9 @@
 using Type = long long;
 
 int main(int argc, char *argv[]) {
-  size_t n = 1e5;
+  size_t n = 1e9;
   //size_t n = 1e4;
-  int num_rounds = 0;
+  int num_rounds = 3;
   if (argc >= 2) {
     n = atoll(argv[1]);
   }

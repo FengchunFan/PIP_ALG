@@ -16,16 +16,6 @@ void scan_down(T *A, size_t s, size_t t, T offset);
  */
 template <typename T>
 T scan(T *A, size_t n) {
-  /**
-   * REPLACE THE BODY OF THE FOLLOWING
-   * FUNCTION WITH YOUR PARALLEL IMPLEMENTATION
-  */
-  
-  // note: 1) Extra functions are allowed 
-  //       2) DO NOT change the name of this `T scan(T *A, size_t n)`
-  
-  //Try the divide and conquer approach
-
   //coarsening
   T total = 0;
 

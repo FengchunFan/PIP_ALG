@@ -8,7 +8,7 @@
 using Type = long long;
 
 int main(int argc, char *argv[]) {
-  size_t n = 1e9;
+  size_t n = 1e4;
   //size_t n = 1e4;
   int num_rounds = 0;
   long long pal_ans = 0;
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
     pal_ans = pal_filter(pal_filter_A, n);
     t.stop();
     if (i == 0) {
-      std::cout << "Exclusive sum (Parallel): " << pal_ans << std::endl;
+      std::cout << "Number of selected elements (Parallel): " << pal_ans << std::endl;
       std::cout << "Warmup round running time: " << t.total_time() << std::endl;
     } else {
       std::cout << "Round " << i << " running time: " << t.total_time()
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     seq_t.stop();
 
     if (i == 0) {
-      std::cout << "Exclusive sum (Sequential): " << seq_ans << std::endl;
+      std::cout << "Number of selected elements (Sequential): " << seq_ans << std::endl;
       std::cout << "Warmup round running time (Sequential): "
                 << seq_t.total_time() << std::endl;
     } else {
@@ -62,8 +62,8 @@ int main(int argc, char *argv[]) {
   }
   std::cout << "\n******* Summary: ******* " << std::endl;
   std::cout << "Average sequential running time: "
-            << seq_total_time / num_rounds << std::endl;
-  std::cout << "Average parallel running time: " << total_time / num_rounds
+            << seq_total_time / 1 << std::endl;
+  std::cout << "Average parallel running time: " << total_time / 1
             << std::endl;
   
   /*std::cout << "seq results: ";
@@ -75,9 +75,9 @@ int main(int argc, char *argv[]) {
   for (size_t i = 0; i < (size_t)pal_ans; i++) {
     std::cout << pal_filter_A[i] << " ";
   }*/
-  std::cout << std::endl;
+  /*std::cout << std::endl;
   std::cout << "seq ans: " << seq_ans << ". pal ans: " << pal_ans;
-  std::cout << std::endl;
+  std::cout << std::endl;*/
 
   if(seq_ans == pal_ans){
     for (size_t i = 0; i < (size_t)seq_ans - 1; i++) {

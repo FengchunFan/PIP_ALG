@@ -38,4 +38,4 @@ test: a.out
 	bash test.sh
 
 clean:
-	rm scan test
+	rm filter test

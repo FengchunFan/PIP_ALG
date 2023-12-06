@@ -27,6 +27,13 @@ struct getA {
 	});						\
   }
 
+template <class T, class size_t, class F, class G>
+	T reduceSerial(size_t s, size_t e, F f, G g) {
+		T r = g(s);
+		for (size_t j = s + 1; j < e; j++) r = f(r, g(j));
+		return r;
+	}
+
 template <class T>
 T sequ_filter(T *A, T *output, size_t n);
 template <class T>
@@ -88,7 +95,7 @@ T pal_filter(T *A, size_t n) {
 			size_t D = Sums[i];
 			size_t L = Sums[i + 1] - D;
 			for (size_t j = 0; j < L; j++) {
-				In[D + j] = In[S + j];
+				A[D + j] = A[S + j];
 			}
 		});
 		startblock = endblock + 1;

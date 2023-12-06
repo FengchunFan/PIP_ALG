@@ -28,7 +28,7 @@ endif
 
 all: filter
 
-filter: filter.h filter.cpp
+filter: filter_real.h filter.h filter.cpp
 	$(CC) $(CPPFLAGS) filter.cpp -o filter
 
 a.out:

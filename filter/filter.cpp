@@ -1,13 +1,14 @@
 #include <cstdlib>
 #include <iostream>
 
+//#include "filter_real.h"
 #include "filter.h"
 #include "get_time.h"
 
 using Type = long long;
 
 int main(int argc, char *argv[]) {
-  size_t n = 1e4;
+  size_t n = 1e9;
   //size_t n = 1e4;
   int num_rounds = 0;
   long long pal_ans = 0;

@@ -8,7 +8,7 @@
 using Type = long long;
 
 int main(int argc, char *argv[]) {
-  size_t n = 1e4;
+  size_t n = 1e9;
   //size_t n = 1e4;
   int num_rounds = 0;
   long long pal_ans = 0;
@@ -67,12 +67,12 @@ int main(int argc, char *argv[]) {
             << std::endl;
   
   /*std::cout << "seq results: ";
-  for (size_t i = 0; i < (size_t)seq_ans; i++) {
+  for (size_t i = 0; i < 20; i++) {
     std::cout << seq_filter_A[i] << " ";
   }
   std::cout << std::endl;
   std::cout << "pal results: ";
-  for (size_t i = 0; i < (size_t)pal_ans; i++) {
+  for (size_t i = 0; i < 20; i++) {
     std::cout << pal_filter_A[i] << " ";
   }*/
   /*std::cout << std::endl;

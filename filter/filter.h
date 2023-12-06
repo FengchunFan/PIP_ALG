@@ -16,7 +16,7 @@ T seq_filter(T *A, size_t n);
 template <class T>
 T pal_filter(T *A, size_t n) {
   T total = 0;
-  if(n < 1e2){
+  if(n < 1e5){
     total = sequ_filter(A, A, n);
     return total;
   }
@@ -36,13 +36,22 @@ T pal_filter(T *A, size_t n) {
 		Sums[i] = k - s;
   });
 
+  std::atomic<int> counter(0);
   for(size_t i = 0; i < l; ++i){
-    total += Sums[i];
+    counter.fetch_add(Sums[i], std::memory_order_relaxed);
+  }
+
+  size_t start = 0;
+  for(size_t i = 0; i < l; ++i){
+    for(size_t j = 0; j < (size_t)Sums[i]; ++j){
+      A[start] = A[i * b + j];
+      start++;
+    }
   }
 
   free(Sums);
 
-  return total;
+  return counter.load();;
 }
 
 template <class T>

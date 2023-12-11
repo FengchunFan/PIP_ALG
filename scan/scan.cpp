@@ -95,9 +95,19 @@ int main(int argc, char *argv[]) {
   }
   std::cout << std::endl;*/
   for (size_t i = 0; i < n; i++) {
-    if (seq_scan_A[i] != pal_scan_A[i] || pal_scan_A[i] != pal_scan_B[i]) {
+    if (seq_scan_A[i] != pal_scan_A[i]) {
       std::cout << "***********************" << std::endl;
-      std::cout << "**** Wrong answer! ****" << std::endl;
+      std::cout << "**** Wrong answer 1! ****" << std::endl;
+      std::cout << "***** index: "<< i << " ****" << std::endl;
+      std::cout << "***********************" << std::endl;
+      break;
+    }
+  }
+
+  for (size_t i = 0; i < n; i++) {
+    if (pal_scan_A[i] != pal_scan_B[i]) {
+      std::cout << "***********************" << std::endl;
+      std::cout << "**** Wrong answer 2! ****" << std::endl;
       std::cout << "***** index: "<< i << " ****" << std::endl;
       std::cout << "***********************" << std::endl;
       break;

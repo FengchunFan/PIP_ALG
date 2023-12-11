@@ -39,10 +39,10 @@ int main(int argc, char *argv[]) {
     if (i == 0) {
       std::cout << "Number of selected elements (in place Parallel): " << pal_ans << std::endl;
       std::cout << "Warmup round running time: " << t.total_time() << std::endl;
+      total_time += t.total_time();
     } else {
       std::cout << "Round " << i << " running time: " << t.total_time()
                 << std::endl;
-      total_time += t.total_time();
     }
   }
 
@@ -55,10 +55,10 @@ int main(int argc, char *argv[]) {
     if (i == 0) {
       std::cout << "Number of selected elements (non in place Parallel): " << pal2_ans << std::endl;
       std::cout << "Warmup round running time: " << t.total_time() << std::endl;
+      total_time_2 += t.total_time();
     } else {
       std::cout << "Round " << i << " running time: " << t.total_time()
                 << std::endl;
-      total_time_2 += t.total_time();
     }
   }
 
@@ -73,11 +73,11 @@ int main(int argc, char *argv[]) {
       std::cout << "Number of selected elements (Sequential): " << seq_ans << std::endl;
       std::cout << "Warmup round running time (Sequential): "
                 << seq_t.total_time() << std::endl;
+      seq_total_time += seq_t.total_time();
     } else {
       std::cout << "Round " << i
                 << " running time (sequential): " << seq_t.total_time()
-                << std::endl;
-      seq_total_time += seq_t.total_time();
+                << std::endl; 
     }
   }
 

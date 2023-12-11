@@ -95,7 +95,7 @@ T pal_filter_non_in_place(T *A, size_t n) {
     }
   });
 
-  parallel_for(0, n, [&](size_t i) {
+  parallel_for(0, flag[n-1], [&](size_t i) {
     A[i] = B[i];
   });
 

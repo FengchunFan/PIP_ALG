@@ -14,7 +14,7 @@ void scan_down_in_place(T *A, size_t s, size_t t, T offset);
 template <typename T>
 T scan_up(T *A, T *LS, size_t n);
 template <typename T>
-void scan_down(T *A, T *B, T *LS, size_t n, T offset);
+void scan_down(T *A, T *LS, size_t n, T offset);
 
 /**
  * Inplace block scan DIRECTLY without filter
@@ -72,18 +72,11 @@ template <typename T>
 T scan(T *A, size_t n) {
   T total = 0;
   Type *LS = (Type *)malloc((n-1) * sizeof(Type));
-  Type *B = (Type *)malloc((n) * sizeof(Type));
 
   total = scan_up(A, LS, n);
-
-  scan_down(A, B, LS, n, (T)0);
-
-  parallel_for(0, n, [&](size_t i) {
-    A[i] = B[i];
-  });
+  scan_down(A, LS, n, (T)0);
 
   free(LS);
-  free(B);
   return total;
 }
 
@@ -110,18 +103,18 @@ T scan_up(T *A, T *LS, size_t n) {
 
 //traverses	the	tree to	compute	prefixes
 template <typename T>
-void scan_down(T *A, T *B, T *LS, size_t n, T offset) {
+void scan_down(T *A, T *LS, size_t n, T offset) {
   if(n < 1e5){
     T total = 0;
     for (size_t i = 0; i < n; i++) {
       T tmp = A[i];
-      B[i] = total + offset;
+      A[i] = total + offset;
       total += tmp;
     }
   }else{
     size_t m = n/2;
-    auto f1 = [&]() {scan_down(A, B, LS, m, offset);};
-    auto f2 = [&]() {scan_down(A + m, B + m, LS + m, n - m, offset + LS[m-1]);};
+    auto f1 = [&]() {scan_down(A, LS, m, offset);};
+    auto f2 = [&]() {scan_down(A + m, LS + m, n - m, offset + LS[m-1]);};
     par_do(f1, f2);
   }
 }
